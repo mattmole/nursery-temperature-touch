@@ -3,8 +3,10 @@ Description=Nursery Thermometer Service
 After=multi-user.target
 
 [Service]
+User=pi
 Type=idle
 ExecStart=/usr/bin/python /home/pi/nursery/nurseryTherm.py
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

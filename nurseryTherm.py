@@ -1,6 +1,5 @@
 #!/usr/bin/python
-#CamJam Edukit 2 - Sensors
-# Worksheet 3 - Temperature
+
 # Import Libraries
 import os
 import glob

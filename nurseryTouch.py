@@ -49,7 +49,7 @@ def handle_touch(event):
             sleeping=True
         else:
             sleeping=False
-        client.publish("/house/nursery/sleeping",json.dumps({"state":str(sleeping),"time":eventTime,"date":eventDate})) 
+        client.publish("/house/nursery/sleeping",json.dumps({"state":int(sleeping),"time":eventTime,"date":eventDate})) 
         print("Sleeping: ",sleeping)
     #Test for feeding
     elif event.name=="Back":
