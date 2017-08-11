@@ -61,7 +61,7 @@ client = paho.Client()
 #client.on_message=on_message        #attach function to callback
 time.sleep(1)
 
-client.connect("192.168.1.104")      #connect to broker
+client.connect("192.168.1.10")      #connect to broker
 #client.loop_start()    #start the loop
 #client.subscribe("house/nursery")
 

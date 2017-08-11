@@ -18,12 +18,15 @@ client = paho.Client()
 time.sleep(1)
 
 #Connect to the broker
-client.connect("192.168.1.104")
+client.connect("192.168.1.10")
 
 #Create some variables to log states
 feedingLeft=False
 feedingRight=False
 sleeping=False
+
+#Start a loop for MQTT
+client.loop_start()
 
 @touchphat.on_touch(['Back','A','B','C','D','Enter'])
 def handle_touch(event):
@@ -70,6 +73,11 @@ def handle_touch(event):
             feedingRight = False
         client.publish("/house/nursery/feeding/right",json.dumps({"state":str(feedingRight),"time":eventTime,"date":eventDate}))
         print ("Right: ",feedingRight)
+
+    #Set the LED on and off again and add a delay for debounce
+    touchphat.set_led(event.name, True)
+    time.sleep(0.5)
+    touchphat.set_led(event.name, False)
 
 signal.pause()
 client.disconnect()
