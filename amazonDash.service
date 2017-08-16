@@ -1,0 +1,11 @@
+[Unit]
+Description=Amazon Dash Handler
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/matt/amazondash/amazonDash.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
