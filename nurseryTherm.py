@@ -6,6 +6,37 @@ import glob
 import time
 import paho.mqtt.client as paho
 import json
+import ssl
+import ConfigParser as configparser
+import sys
+
+#Variables
+confFile = "/home/pi/nursery/nursery.conf"
+ca_certs = "/etc/ssl/certs/ca-certificates.crt"
+
+#Read details from the config file
+config = configparser.SafeConfigParser()
+config.read(confFile)
+
+# getfloat() raises an exception if the value is not a float
+# getint() and getboolean() also do this for their respective types
+username = ""
+password = ""
+server = ""
+port = ""
+
+try:
+  username = config.get('auth', 'username')
+  password = config.get('auth', 'password')
+
+  server = config.get('server','host')
+  port = config.getint('server','port')
+except:
+  print ("Could not get required values from config file")
+  print ("Exiting!")
+  sys.exit()
+
+print (username, password, server, port)
 
 # Initialize the GPIO Pins
 os.system('modprobe w1-gpio') # Turns on the GPIO module
@@ -61,7 +92,12 @@ client = paho.Client()
 #client.on_message=on_message        #attach function to callback
 time.sleep(1)
 
-client.connect("192.168.1.10")      #connect to broker
+#Connect to the broker
+client.tls_set(ca_certs, certfile=None, keyfile=None, cert_reqs=ssl.CERT_REQUIRED,tls_version=ssl.PROTOCOL_TLSv1, ciphers=None) # set the SSL options
+client.username_pw_set(username, password=password)
+
+client.connect(server,port=port)      #connect to broker
+
 #client.loop_start()    #start the loop
 #client.subscribe("house/nursery")
 
