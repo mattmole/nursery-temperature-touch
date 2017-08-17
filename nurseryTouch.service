@@ -1,5 +1,5 @@
 [Unit]
-Description=Nursery Thermometer Service
+Description=Nursery Touch button Service
 After=multi-user.target
 
 [Service]
